@@ -3,10 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:apps_quiz/start_screen.dart';
 import 'package:apps_quiz/question_sccreen.dart';
 import 'package:apps_quiz/data/questions.dart';
+import 'dart:io';
+import 'package:connectivity/connectivity.dart';
+
+
 
 
 class Quiz extends StatefulWidget {
   const Quiz({super.key});
+ 
 
   @override
   State<Quiz> createState() {
@@ -18,16 +23,27 @@ class _QuizState extends State<Quiz> {
  List<String> selectedanswers=[];
 Widget? activescreen;
 int correct=0;
+bool isInternetConnected = false;
+
 
 @override
   void initState() {
     activescreen=StartScreen(switchscreen);
     super.initState();
+    checkInternetConnectivity();
   }
 
-
+Future<void> checkInternetConnectivity() async {
+    var connectivityResult = await Connectivity().checkConnectivity();
+    if(isInternetConnected = (connectivityResult != ConnectivityResult.none)){
+        exit(0);
+    }
+     
+    
+  }
 
 void chooseanswer(String answer){
+  checkInternetConnectivity();
 
   selectedanswers.add(answer);
   
@@ -41,6 +57,7 @@ void chooseanswer(String answer){
     setState(() {
       
       activescreen= ResultScreen(correct,selectedanswers.length);
+
       selectedanswers =[];
     });
 
