@@ -29,5 +29,3 @@ class ResultScreen extends StatelessWidget{
 
 }
 
-class X {
-}
